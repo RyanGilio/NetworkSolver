@@ -1,0 +1,171 @@
+% File 'puzzle'
+
+:- sorts
+        type;
+        ori;
+        node.
+
+:- objects
+        up, down, left, right :: ori;
+        1..5 :: node;
+        1..4 :: type.
+
+
+:- variables
+        X1,X2 :: node;
+        Y1,Y2 :: node;
+        B :: boolean;
+        O1, O2 :: ori;
+        F1, F2 :: type.
+
+:- constants
+        cellOri(node, node) :: ori;
+        cellType(node, node) :: type.
+
+% By default each cell has any type 
+{cellType(X1,Y1)=F1}.
+
+% By default each cell has any orientation
+{cellOri(X1,Y1)=O1}.
+
+% Defining the cell types for the problem
+
+cellType(1,1)=1.
+cellType(1,2)=1.
+cellType(1,3)=2.
+cellType(1,4)=1.
+cellType(1,5)=2.
+cellType(2,1)=3.
+cellType(2,2)=4.
+cellType(2,3)=4.
+cellType(2,4)=4.
+cellType(2,5)=1.
+cellType(3,1)=3.
+cellType(3,2)=1.
+cellType(3,3)=2.
+cellType(3,4)=2.
+cellType(3,5)=4.
+cellType(4,1)=3.
+cellType(4,2)=2.
+cellType(4,3)=1.
+cellType(4,4)=1.
+cellType(4,5)=3.
+cellType(5,1)=1.
+cellType(5,2)=4.
+cellType(5,3)=1.
+cellType(5,4)=1.
+cellType(5,5)=1.
+
+%%%%%%%%%%%%%%Above Testing%%%%%%%%%%%%%%%%%%%%%
+
+%Type 1 Left & Up - Done -  Checked Twice
+<- (cellOri(X1,Y1)=left | cellOri(X1,Y1)=up) & cellType(X1,Y1)=1 & cellType(X1-1,Y1)=F1 & cellOri(X1-1,Y1)=O2 & ((F1=1 & O2=up) | (F1=1 & O2=left) | (F1=2 & O2!=down) | (F1=3 & O2=left) | (F1=3 & O2=right) | (F1=4 & O2=up)).
+%Type 1 Right & Down  - Done - Checked Twice
+<- (cellOri(X1,Y1)=right | cellOri(X1,Y1)=down) & cellType(X1,Y1)=1 & cellType(X1-1,Y1)=F1 & cellOri(X1-1,Y1)=O2 & ((F1=1 & O2=right) | (F1=1 & O2=down) | (F1=2 & O2=down) | (F1=3 & O2=up) | (F1=3 & O2=down) | (F1=4 & O2!=up)).
+
+
+%Type 2 Left & Right & Down - Done
+<- (cellOri(X1,Y1)=left | cellOri(X1,Y1)=right | cellOri(X1,Y1)=down) & cellType(X1,Y1)=2 & cellType(X1-1,Y1)=F1 & cellOri(X1-1,Y1)=O2 & ((F1=1 & O2=right) | (F1=1 & O2=down) | (F1=2 & O2=down) | (F1=3 & O2=up) | (F1=3 & O2=down) | (F1=4 & O2!=up)).
+%Type 2 Up - Done
+<- (cellOri(X1,Y1)=up) & cellType(X1,Y1)=2 & cellType(X1-1,Y1)=F1 & cellOri(X1-1,Y1)=O2 & ((F1=1 & O2=left) | (F1=1 & O2=up) | (F1=2 & O2!=down) | (F1=3 & O2=left) | (F1=3 & O2=right) | (F1=4 & O2=up)).
+
+%Type 3 Left & Right - Done
+<- (cellOri(X1,Y1)=left | cellOri(X1,Y1)=right) & cellType(X1,Y1)=3 & cellType(X1-1,Y1)=F1 & cellOri(X1-1,Y1)=O2 & ((F1=1 & O2=right) | (F1=1 & O2=down) | (F1=2 & O2=down) | (F1=3 & O2=up) | (F1=3 & O2=down) | (F1=4 & O2!=up)).
+%Type 3 Up & Down - Done
+<- (cellOri(X1,Y1)=up | cellOri(X1,Y1)=down) & cellType(X1,Y1)=3 & cellType(X1-1,Y1)=F1 & cellOri(X1-1,Y1)=O2 & ((F1=1 & O2=left) | (F1=1 & O2=up) | (F1=2 & O2!=down) | (F1=3 & O2=left) | (F1=3 & O2=right) | (F1=4 & O2=up)).
+
+%Type 4 Left & Right & Up - Done
+<- (cellOri(X1,Y1)=left | cellOri(X1,Y1)=right | cellOri(X1,Y1)=up) & cellType(X1,Y1)=4 & cellType(X1-1,Y1)=F1 & cellOri(X1-1,Y1)=O2 & ((F1=1 & O2=left) | (F1=1 & O2=up) | (F1=2 & O2!=down) | (F1=3 & O2=left) | (F1=3 & O2=right) | (F1=4 & O2=up)).
+%Type 4 Down - Done 
+<- (cellOri(X1,Y1)=down) & cellType(X1,Y1)=4 & cellType(X1-1,Y1)=F1 & cellOri(X1-1,Y1)=O2 & ((F1=1 & O2=right) | (F1=1 & O2=down) | (F1=2 & O2=down) | (F1=3 & O2=up) | (F1=3 & O2=down) | (F1=4 & O2!=up)).
+
+%%%%%%%%%%%%%%Below Testing%%%%%%%%%%%%%%%%%%%%%
+
+%Type 1 Left & Up - Done -  Checked Twice
+<- (cellOri(X1,Y1)=left | cellOri(X1,Y1)=up) & cellType(X1,Y1)=1 & cellType(X1+1,Y1)=F1 & cellOri(X1+1,Y1)=O2 & ((F1=1 & O2=up) | (F1=1 & O2=left) | (F1=2 & O2=up) | (F1=3 & O2=up) | (F1=3 & O2=down) | (F1=4 & O2!=down)).
+%Type 1 Right & Down - Done
+<- (cellOri(X1,Y1)=right | cellOri(X1,Y1)=down) & cellType(X1,Y1)=1 & cellType(X1+1,Y1)=F1 & cellOri(X1+1,Y1)=O2 & ((F1=1 & O2=right) | (F1=1 & O2=down) | (F1=2 & O2!=up) | (F1=3 & O2=left) | (F1=3 & O2=right) | (F1=4 & O2=down)).
+
+%Type 2 Left & Right & Up - Done
+<- (cellOri(X1,Y1)=left | cellOri(X1,Y1)=right | cellOri(X1,Y1)=up) & cellType(X1,Y1)=2 & cellType(X1+1,Y1)=F1 & cellOri(X1+1,Y1)=O2 & ((F1=1 & O2=left) | (F1=1 & O2=up) | (F1=2 & O2=up) | (F1=3 & O2=up) | (F1=3 & O2=down) | (F1=4 & O2!=down)).
+%Type 2 Down 
+<- (cellOri(X1,Y1)=down) & cellType(X1,Y1)=2 & cellType(X1+1,Y1)=F1 & cellOri(X1+1,Y1)=O2 & ((F1=1 & O2=right) | (F1=1 & O2=down) | (F1=2 & O2!=up) | (F1=3 & O2=left) | (F1=3 & O2=right) | (F1=4 & O2=down)).
+
+%Type 3 Left & Right
+<- (cellOri(X1,Y1)=left | cellOri(X1,Y1)=right) & cellType(X1,Y1)=3 & cellType(X1+1,Y1)=F1 & cellOri(X1+1,Y1)=O2 & ((F1=1 & O2=left) | (F1=1 & O2=up) | (F1=2 & O2=up) | (F1=3 & O2=up) | (F1=3 & O2=down) | (F1=4 & O2!=down)).
+%Type 3 Up & Down
+<- (cellOri(X1,Y1)=up | cellOri(X1,Y1)=down) & cellType(X1,Y1)=3 & cellType(X1+1,Y1)=F1 & cellOri(X1+1,Y1)=O2 & ((F1=1 & O2=right) | (F1=1 & O2=down) | (F1=2 & O2!=up) | (F1=3 & O2=left) | (F1=3 & O2=right) | (F1=4 & O2=down)).
+
+%Type 4 Left & Right & Down
+<- (cellOri(X1,Y1)=left | cellOri(X1,Y1)=right | cellOri(X1,Y1)=down) & cellType(X1,Y1)=4 & cellType(X1+1,Y1)=F1 & cellOri(X1+1,Y1)=O2 & ((F1=1 & O2=right) | (F1=1 & O2=down) | (F1=2 & O2!=up) | (F1=3 & O2=left) | (F1=3 & O2=right) | (F1=4 & O2=down)).
+%Type 4 Up
+<- (cellOri(X1,Y1)=up) & cellType(X1,Y1)=4 & cellType(X1+1,Y1)=F1 & cellOri(X1+1,Y1)=O2 & ((F1=1 & O2=left) | (F1=1 & O2=up) | (F1=2 & O2=up) | (F1=3 & O2=up) | (F1=3 & O2=down) | (F1=4 & O2!=down)).
+
+
+
+%%%%%%%%%%%%%%Left Testing%%%%%%%%%%%%%%%%%%%%%
+
+% Type 1: Left & Right - works
+<- (cellOri(X1,Y1)=left | cellOri(X1,Y1)=right) & cellType(X1,Y1)=1 & cellType(X1,Y1-1)=F1 & cellOri(X1,Y1-1)=O2 & ((F1=1 & O2=left) | (F1=1 & O2=right) | (F1=2 & O2=right) | (F1=3 & O2=left) | (F1=3 & O2=right) | (F1=4 & O2!=left)).
+% Type 1 Up & Down
+<- (cellOri(X1,Y1)=up | cellOri(X1,Y1)=down) & cellType(X1,Y1)=1 & cellType(X1,Y1-1)=F1 & cellOri(X1,Y1-1)=O2 & ((F1=1 & O2=up) | (F1=1 & O2=down) | (F1=2 & O2!=right) | (F1=3 & O2=up) | (F1=3 & O2=down) | (F1=4 & O2=left)).
+
+
+% Type 2 Left
+<- (cellOri(X1,Y1)=left) & cellType(X1,Y1)=2 & cellType(X1,Y1-1)=F1 & cellOri(X1,Y1-1)=O2 & ((F1=1 & O2=up) | (F1=1 & O2=down) | (F1=2 & O2!=right) | (F1=3 & O2=up) | (F1=3 & O2=down) | (F1=4 & O2=left)).
+% Type 2 Right, Up & Down
+<- (cellOri(X1,Y1)=up | cellOri(X1,Y1)=down | cellOri(X1,Y1)=right ) & cellType(X1,Y1)=2 & cellType(X1,Y1-1)=F1 & cellOri(X1,Y1-1)=O2 & ((F1=1 & O2=right) | (F1=1 & O2=left) | (F1=2 & O2=right) | (F1=3 & O2=left) | (F1=3 & O2=right) | (F1=4 & O2!=left)).
+
+% Type 3 Left & Right
+<- (cellOri(X1,Y1)=left | cellOri(X1,Y1)=right) & cellType(X1,Y1)=3 & cellType(X1,Y1-1)=F1 & cellOri(X1,Y1-1)=O2 &  ((F1=1 & O2=up) | (F1=1 & O2=down) | (F1=2 & O2!=right) | (F1=3 & O2=up) | (F1=3 & O2=down) | (F1=4 & O2=left)).
+% Type 3 Up & Down
+<- (cellOri(X1,Y1)=up | cellOri(X1,Y1)=down) & cellType(X1,Y1)=3 & cellType(X1,Y1-1)=F1 & cellOri(X1,Y1-1)=O2 & ((F1=1 & O2=left) | (F1=1 & O2=right) | (F1=2 & O2=right) | (F1=3 & O2=left) | (F1=3 & O2=right) | (F1=4 & O2!=left)).
+
+
+% Type 4 Left, Up & Down
+<- (cellOri(X1,Y1)=up | cellOri(X1,Y1)=down | cellOri(X1,Y1)=left ) & cellType(X1,Y1)=4 & cellType(X1,Y1-1)=F1 & cellOri(X1,Y1-1)=O2 & ((F1=1 & O2=up) | (F1=1 & O2=down) | (F1=2 & O2!=right) | (F1=3 & O2=up) | (F1=3 & O2=down) | (F1=4 & O2=left)).
+% Type 4 Right
+<- (cellOri(X1,Y1)=right) & cellType(X1,Y1)=4 & cellType(X1,Y1-1)=F1 & cellOri(X1,Y1-1)=O2 & ((F1=1 & O2=right) | (F1=1 & O2=left) | (F1=2 & O2=right) | (F1=3 & O2=left) | (F1=3 & O2=right) | (F1=4 & O2!=left)).
+
+%%%%%%%%%%%%%%Right Testing%%%%%%%%%%%%%%%%%%%%%
+
+
+% Type 1 Left & Right - works
+<- (cellOri(X1,Y1)=left | cellOri(X1,Y1)=right) & cellType(X1,Y1)=1 & cellType(X1,Y1+1)=F1 & cellOri(X1,Y1+1)=O2 &  ((F1=1 & O2=left) | (F1=1 & O2=right) | (F1=2 & O2!=left) | (F1=3 & O2=up) | (F1=3 & O2=down) | (F1=4 & O2=right)).
+% Type 1 Up & Down - works
+<- (cellOri(X1,Y1)=up | cellOri(X1,Y1)=down) & cellType(X1,Y1)=1 & cellType(X1,Y1+1)=F1 & cellOri(X1,Y1+1)=O2 &  ((F1=1 & O2=up) | (F1=1 & O2=down) | (F1=2 & O2=left) | (F1=3 & O2=left) | (F1=3 & O2=right) | (F1=4 & O2!=right)).
+
+
+% Type 2 Left, Up & Down - works
+<- (cellOri(X1,Y1)=left | cellOri(X1,Y1)=up | cellOri(X1,Y1)=down) & cellType(X1,Y1)=2 & cellType(X1,Y1+1)=F1 & cellOri(X1,Y1+1)=O2 &  ((F1=1 & O2=down) | (F1=1 & O2=up) | (F1=2 & O2=left) | (F1=3 & O2=left) | (F1=3 & O2=right) | (F1=4 & O2!=right)).
+% Type 2 Right -work
+<- (cellOri(X1,Y1)=right) & cellType(X1,Y1)=2 & cellType(X1,Y1+1)=F1 & cellOri(X1,Y1+1)=O2 & ((F1=1 & O2=left) | (F1=1 & O2=right) | (F1=2 & O2!=left) | (F1=3 & O2=up) | (F1=3 & O2=down) | (F1=4 & O2=right)).
+
+
+% Type 3 Left & Right
+<- (cellOri(X1,Y1)=left | cellOri(X1,Y1)=right) & cellType(X1,Y1)=3 & cellType(X1,Y1+1)=F1 & cellOri(X1,Y1+1)=O2 &  ((F1=1 & O2=left) | (F1=1 & O2=right) | (F1=2 & O2!=left) | (F1=3 & O2=up) | (F1=3 & O2=down) | (F1=4 & O2=right)).
+% Type 3 Up & Down
+<- (cellOri(X1,Y1)=up | cellOri(X1,Y1)=down) & cellType(X1,Y1)=3 & cellType(X1,Y1+1)=F1 & cellOri(X1,Y1+1)=O2 & ((F1=1 & O2=up) | (F1=1 & O2=down) | (F1=2 & O2=left) | (F1=3 & O2=left) | (F1=3 & O2=right) | (F1=4 & O2!=right)).
+
+%Type 4 Right, Up & down
+<- (cellOri(X1,Y1)=right | cellOri(X1,Y1)=down | cellOri(X1,Y1)=up) & cellType(X1,Y1)=4 & cellType(X1,Y1+1)=F1 & cellOri(X1,Y1+1)=O2 & ((F1=1 & O2=left) | (F1=1 & O2=right) | (F1=2 & O2!=left) | (F1=3 & O2=up) | (F1=3 & O2=down) | (F1=4 & O2=right)).
+%Type 4 Left
+%<- cellOri(X1,Y1)=left & cellType(X1,Y1)=4 & cellType(X1,Y+1)=F1 & cellOri(X1,Y1+1)=O2 & ((F1=1 & O2=up) | (F1=1 & O2=down) | (F1=2 & O2=left) | (F1=3 & O2=left) | (F1=3 & O2=right) | (F1=4 & O2!=right)).
+
+
+
+%%%%%%%%%%%%%%Edge Testing%%%%%%%%%%%%%%%%%%%%%
+
+%Up
+<- X1=1 & cellType(X1,Y1)=F1 & cellOri(X1,Y1)=O2 & ((F1=1 & O2=left) | (F1=1 & O2=up) | (F1=2 & O2=up) | (F1=3 & O2=up) | (F1=3 & O2=down) | (F1=4 & O2=left) | (F1=4 & O2=right) | (F1=4 & O2=up)).
+
+%Left
+<- Y1=1 & cellType(X1,Y1)=F1 & cellOri(X1,Y1)=O2 & ((F1=1 & O2=up) | (F1=1 & O2=down) | (F1=2 & O2=left) | (F1=3 & O2=left) | (F1=3 & O2=right) | (F1=4 & O2=left) | (F1=4 & O2=down) | (F1=4 & O2=up)).
+
+
+%Right
+<- Y1=5 & cellType(X1,Y1)=F1 & cellOri(X1,Y1)=O2 & ((F1=1 & O2=left) | (F1=1 & O2=right) | (F1=2 & O2=right) | (F1=3 & O2=left) | (F1=3 & O2=right) | (F1=4 & O2=right) | (F1=4 & O2=down) | (F1=4 & O2=up)).
+
+%Down
+<- X1=5 & cellType(X1,Y1)=F1 & cellOri(X1,Y1)=O2 & ((F1=1 & O2=right) | (F1=1 & O2=down) | (F1=2 & O2=down) | (F1=3 & O2=up) | (F1=3 & O2=down) | (F1=4 & O2=left) | (F1=4 & O2=right) | (F1=4 & O2=down)).
+
